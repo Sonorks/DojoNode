@@ -49,3 +49,29 @@ app.post('/api/setWord', function(req,res){
         }
     });
 });
+
+function randomWord(callback){
+    Word.find({}, function(err,words){
+        if (err) {
+            console.log(`Error al buscar palabras ${err}`);   
+        } else {
+            var number = Math.floor(Math.random()*words.length);
+            currentWord = words[number].word;
+            callback(0,currentWord); 
+        }
+    });
+}
+
+io.on('connection',function(socket){
+    console.log("Alguien se ha conectado con sockets");
+    socket.emit('story', storyParts);
+    socket.emit('new-word',currentWord);
+    socket.on('sent-story', function(data){
+        storyParts.push(data);
+        io.sockets.emit('story', storyParts);
+        randomWord(function(err,data){
+            io.emit('new-word', data);
+        });
+    })
+
+});
