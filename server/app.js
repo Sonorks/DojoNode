@@ -1,7 +1,7 @@
 //dependencias requeridas para el funcionamiento
 var express=require('express');
 var cors=require('cors');
-var bodyParsere=require('body-parse')
+var bodyParser=require('body-parser')
 var app=express();
 var server=require('http').Server(app);
 var io=require('socket.io').listen(server);
@@ -31,5 +31,6 @@ mongoose.connect(dbMongo,function(err,res){
 });
 
 server.listen(port,function(){
-    console.log("corriendo por el puerto:"+port);
+    console.log("corriendo por el puerto: "+port);
 });
+
