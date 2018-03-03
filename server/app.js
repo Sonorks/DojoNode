@@ -20,3 +20,16 @@ app.use(express.static('public'));
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json());
 app.use(cors());
+
+mongoose.connect(dbMongo,function(err,res){
+    if (err) {
+        //`` se usa para llamar a argumentos de la funcion
+        console.log(`Error al conectarse a la bd ${err}`);
+    } else {
+        console.log("conexion exitosa");
+    }
+});
+
+server.listen(port,function(){
+    console.log("corriendo por el puerto:"+port);
+});
