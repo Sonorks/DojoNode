@@ -34,3 +34,18 @@ server.listen(port,function(){
     console.log("corriendo por el puerto: "+port);
 });
 
+app.post('/api/setWord', function(req,res){
+    let word = new Word();
+    word.word = req.param('inputWord');
+    word.save(function(err, storedWord){
+        if (err) {
+            res.status(500)
+            res.send({message:`Error al guardar palabra ${err}`})
+
+        } else {
+            res.status(200)
+            res.redirect('/');
+            res.end();
+        }
+    });
+});
